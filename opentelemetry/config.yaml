@@ -1,0 +1,25 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+
+processors:
+
+exporters:
+  otlp:
+    endpoint: "https://zipkin.bravebeach-390ea7cc.westeurope.azurecontainerapps.io"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch,filter/healthcheck,attributes/collector_info]
+      exporters: [otlp]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp]
